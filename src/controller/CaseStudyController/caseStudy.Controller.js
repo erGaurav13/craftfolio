@@ -9,15 +9,44 @@ class CaseStudyController {
       res.status(400).json({ error: err.message });
     }
   }
-
   async getAll(req, res) {
     try {
-      const results = await caseStudyService.getAllCaseStudies(req.user.id);
-      res.status(200).json(results);
+      const page = parseInt(req.query.page) || 1;      // default to page 1
+      const limit = parseInt(req.query.limit) || 10;   // default to 10 items per page
+      const skip = (page - 1) * limit;
+  
+      const results = await caseStudyService.getAllCaseStudies(req.user.id, skip, limit);
+      
+      res.status(200).json({
+        page,
+        limit,
+        data: results,
+      });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
   }
+
+  async getAllbyUsername(req, res) {
+    try {
+      const page = parseInt(req.query.page) || 1;      // default to page 1
+      const limit = parseInt(req.query.limit) || 10;   // default to 10 items per page
+      const username = (req.query.username) || "";   // default to 10 items per page
+
+      const skip = (page - 1) * limit;
+  
+      const results = await caseStudyService.getAllCaseStudiesUsername(username, skip, limit);
+      
+      res.status(200).json({
+        page,
+        limit,
+        data: results,
+      });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  }
+  
 
   async getById(req, res) {
     try {

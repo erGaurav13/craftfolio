@@ -1,3 +1,3 @@
 const auth = require('./AuthMiddleware/auth.middleware');
-
-module.exports = { auth };
+const trackAnalytics=require("./TrackAnalytics/trackAnalytics.middleware")
+module.exports = { auth ,trackAnalytics};

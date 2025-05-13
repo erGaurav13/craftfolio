@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { UserModel } = require('../../model/index.model');
 
 class AuthService {
-  async signup({ username, email, password, displayName, bio, avatarUrl }) {
+  async signup({ username, email, password, displayName, bio, avatarUrl,_id }) {
     const existingUser = await UserModel.findOne({ $or: [{ email }, { username }] });
     if (existingUser) {
       throw new Error('User with this email or username already exists');
@@ -12,6 +12,7 @@ class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await UserModel.create({
+        _id,
       username,
       email,
       password: hashedPassword,

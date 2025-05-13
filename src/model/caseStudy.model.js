@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 
 const caseStudySchema = new mongoose.Schema(
   {
+    _id: { type: String }, // Now _id will be a string instead of ObjectId
+
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
@@ -31,6 +33,12 @@ const caseStudySchema = new mongoose.Schema(
       ],
     },
     isPublished: { type: Boolean, default: false },
+    theme: { 
+      type: Number, 
+      enum: [1, 2, 3], 
+      default: 1 
+    },
+  
   },
   { timestamps: true },
 );
